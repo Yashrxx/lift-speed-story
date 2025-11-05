@@ -2,17 +2,23 @@ import { useState } from "react";
 import Hero from "@/components/Hero";
 import BlockDiagram from "@/components/BlockDiagram";
 import SpeedSimulator from "@/components/SpeedSimulator";
+import LiveLiftVisualizer from "@/components/LiveLiftVisualizer";
 import MotorCalculations from "@/components/MotorCalculations";
 import OperationStages from "@/components/OperationStages";
 
 const Index = () => {
-  const [speed] = useState(100);
+  const [speed, setSpeed] = useState(100);
 
   return (
     <div className="min-h-screen bg-background">
       <Hero />
       <BlockDiagram />
-      <SpeedSimulator />
+      <SpeedSimulator speed={speed} onSpeedChange={setSpeed} />
+      <section className="py-16 px-6">
+        <div className="container mx-auto max-w-6xl">
+          <LiveLiftVisualizer speed={speed} />
+        </div>
+      </section>
       <MotorCalculations speed={speed} />
       <OperationStages />
       

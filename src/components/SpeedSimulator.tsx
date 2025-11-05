@@ -5,8 +5,13 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
-const SpeedSimulator = () => {
-  const [speed, setSpeed] = useState<number>(100);
+interface SpeedSimulatorProps {
+  speed: number;
+  onSpeedChange: (speed: number) => void;
+}
+
+const SpeedSimulator = ({ speed, onSpeedChange }: SpeedSimulatorProps) => {
+  const [localSpeed, setLocalSpeed] = useState<number>(speed);
   const [simulated, setSimulated] = useState(false);
 
   const generateMotorData = (targetSpeed: number) => {
@@ -28,6 +33,7 @@ const SpeedSimulator = () => {
   const motorData = generateMotorData(speed);
 
   const handleSimulate = () => {
+    onSpeedChange(localSpeed);
     setSimulated(true);
   };
 
@@ -43,8 +49,8 @@ const SpeedSimulator = () => {
               <Input
                 id="speed"
                 type="number"
-                value={speed}
-                onChange={(e) => setSpeed(Number(e.target.value))}
+                value={localSpeed}
+                onChange={(e) => setLocalSpeed(Number(e.target.value))}
                 min="0"
                 max="500"
                 className="text-lg"
@@ -54,7 +60,7 @@ const SpeedSimulator = () => {
               onClick={handleSimulate}
               className="bg-accent hover:bg-accent/90 text-accent-foreground px-8"
             >
-              Simulate
+              Simulate & Activate Lift
             </Button>
           </div>
 
